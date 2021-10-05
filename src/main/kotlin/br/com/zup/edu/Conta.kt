@@ -1,10 +1,7 @@
 package br.com.zup.edu
 
 import java.math.BigDecimal
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import javax.persistence.*
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Positive
@@ -20,11 +17,24 @@ class Conta(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
 
+    @Version
+    var version: Long? = 0L
+
     var saldo: BigDecimal = BigDecimal.ZERO
 
-    fun deposita(valor: BigDecimal){
+    fun credita(valor: BigDecimal): Boolean{
         if(valor > BigDecimal.ZERO){
             saldo += valor
+            return true
         }
+        return false
+    }
+
+    fun debita(valor: BigDecimal): Boolean{
+        if(valor <= saldo){
+            saldo -= valor
+            return true
+        }
+        return false
     }
 }

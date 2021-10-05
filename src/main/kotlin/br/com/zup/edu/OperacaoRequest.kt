@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull
 import javax.validation.constraints.Positive
 
 @Introspected
-data class DepositoRequest(
+data class OperacaoRequest(
     @field:NotBlank
     val numeroConta: String,
     @field:Positive
