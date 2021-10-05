@@ -30,10 +30,6 @@ class ContaDigitalController(val contaRepository: ContaRepository) {
 
         val creditou = conta.credita(operacaoRequest.valor)
 
-        if(!creditou){
-            return HttpResponse.status<Any?>(HttpStatus.UNPROCESSABLE_ENTITY).body("Ocorreu um erro ao creditar o valor.")
-        }
-
         try {
             contaRepository.update(conta)
         } catch (e: OptimisticLockException){
@@ -55,7 +51,6 @@ class ContaDigitalController(val contaRepository: ContaRepository) {
         }
         val conta = possivelConta.get();
         logger.info("Conta encontrada: ${conta.numeroConta}")
-
 
         val debitou = conta.debita(operacaoRequest.valor)
 
